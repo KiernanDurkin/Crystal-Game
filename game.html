@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Kiernan's crystal game</title>
+  <link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet"> 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  
+  <style type="text/css">
+
+    .crystal-image {
+      width: 100px;
+      height:100px;
+      margin:20px;
+    
+    }
+    body,html{
+      height:100%;
+      margin: 0;
+    }
+    .titleHead{
+      color:purple;
+    }
+
+    body{
+      background-image: url('https://vignette.wikia.nocookie.net/dream-world/images/7/74/Crystal_Cave.jpg/revision/latest?cb=20120401122717');
+      background-size: cover;
+      background-repeat: no-repeat;
+      color:yellow;
+      font-family: 'Bungee', cursive;
+
+
+    }
+  </style>
+
+</head>
+<body>
+ <div class="container">
+  <div class="row">
+     <div class="col-md-12 text-center">
+      <h1 class = "titleHead"> Crystal Game </h1>
+      
+        <h4>How To Play</h4>
+      <ol> 
+        <li>Click a Crystal</li>
+        <li>When you click a crystal it will add a specific amount of points to your total score.</li>
+        <li> If your total score ends up matching the Magic Number you Win</li>
+        <li> IF NOT YOU LOSE!!!!</li>
+      </ol>
+
+
+      
+
+     </div>
+   </div>
+ 
+ <br>
+ <br>
+
+  <div class="row">
+
+    <div class="col-md-6-offset-6 text-center">
+      <div class="col-md-12">
+  <h1>Number to Guess: <span id="number-to-guess"></span></h1>
+      </div>
+    <div class="col-md-12">
+  <h1>Your total score is: <span id ="total-score"></span></h1>
+    </div>
+    <div class="col-md-6-offset-6">
+        <div id="crystals">
+        </div>
+    </div>
+  
+
+    <div class="offset-12-col-md-">
+      <div class="offset-12-col-md-text-center stats">
+         <h1>Wins: <span id ="Wins"></span></h1>
+          <h1>Losses: <span id ="Losses"></span></h1>
+      </div>
+   </div>
+</div>
+
+
+ 
+ 
+  
+
+
+  <!-- JAVASCRIPT  -->
+  <!-- ========================================= -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <script type="text/javascript">
+
+  var game = function(){
+  
+      
+
+       var resetCrys = function(){
+    numberOptions = Array.from({length: 4}, () => Math.floor(Math.random() * 12) + 1);
+  
+     targetNumber = Math.floor(Math.random() * 120) + 19;
+          
+         }
+  
+ 
+  var targetNumber = Math.floor(Math.random() * 120) + 19;
+  $("#number-to-guess").text(targetNumber);
+
+  var counter = 0;
+  var wins = 0;
+  var losses = 0;
+  var numberOptions = Array.from({length: 4}, () => Math.floor(Math.random() * 12) + 1);
+  
+ 
+
+     
+   
+
+
+    
+    
+
+    
+
+ 
+    for (var i = 0; i < numberOptions.length; i++) {
+      
+  console.log(numberOptions);
+    var imageCrystal = $("<img>");
+
+  
+    imageCrystal.addClass("crystal-image");
+
+
+    imageCrystal.attr("src", "http://cdn.playbuzz.com/cdn/35910209-2844-45c0-b099-f4d82878d54f/00261fda-4062-4096-81fd-8cf96b9034e8.jpg");
+
+  
+    imageCrystal.attr("data-crystalvalue", numberOptions[i]);
+
+
+    $("#crystals").append(imageCrystal);
+  }
+
+
+  $(".crystal-image").on("click", function() {
+
+    
+    var crystalValue = ($(this).attr("data-crystalvalue"));
+    crystalValue = parseInt(crystalValue);
+    
+    counter += crystalValue;
+
+  
+
+    
+   
+     $("#total-score").text(counter);
+    if (counter === targetNumber) {
+      alert("You win!");
+      ++wins;
+       numberOptions = resetCrys()
+      $("#Wins").text(wins);
+      counter = 0;
+       resetCrys()
+      
+      $("#number-to-guess").text(targetNumber); 
+    }
+
+    else if (counter >= targetNumber) {
+      alert("You lose!!");
+      ++losses;
+      $("#Losses").text(losses);
+        resetCrys()
+      counter = 0;
+     $("#number-to-guess").text(targetNumber);   
+      
+      
+    }
+ 
+  });
+
+
+};
+game()
+
+  
+
+  </script>
+</body>
+</html>
